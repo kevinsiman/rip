@@ -3,18 +3,15 @@ import React, { useState, Fragment } from "react";
 
 import { Dialog, Transition } from "@headlessui/react";
 import { Table } from "./Table";
+import { rip } from "./Gerador";
 
 interface ListProps {
-  opName: string;
-  ferramenta: string;
-  cota: number;
-  tolMax: number;
-  tolMin: number;
-  toleranciaMax: any;
-  toleranciaMin: any;
+  item: rip;
+  handleDelete: (type: string) => void;
 }
 
-export const List = ({ opName, ferramenta, cota, tolMax, tolMin, toleranciaMax, toleranciaMin }: ListProps) => {
+export const List = ({ item, handleDelete }: ListProps) => {
+  const { id, description, opName, ferramenta, cota, tolMax, tolMin, toleranciaMax, toleranciaMin } = item;
   let [isOpen, setIsOpen] = useState(false);
   function closeModal() {
     setIsOpen(false);
@@ -30,18 +27,23 @@ export const List = ({ opName, ferramenta, cota, tolMax, tolMin, toleranciaMax, 
         <th scope="row" className="text-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
           {opName}
         </th>
-        <td className="text-center px-6 py-4 text-gray-900">{ferramenta}</td>
+        <th scope="row" className="text-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+          {description}
+        </th>
+        <td className="text-center px-6 py-4 text-gray-900">
+          <span className="bg-blue-200 text-blue-600 text-sm font-medium mr-2 px-2.5 py-0.5 rounded ">{ferramenta}</span>
+        </td>
         <td className="text-center px-6 py-4 text-gray-900">{cota}</td>
         <td className="text-center px-6 py-4 text-gray-900">{tolMax}</td>
         <td className="text-center px-6 py-4 text-gray-900">{tolMin}</td>
         <td className="text-center px-6 py-4 text-gray-900 flex justify-center gap-2">
           <FilePdf className="hover:cursor-pointer" onClick={openModal} size={20} weight="fill" />
-          <Trash className="hover:cursor-pointer" onClick={() => alert("Implementando")} size={20} weight="fill" />
+          <Trash className="hover:cursor-pointer" onClick={() => handleDelete(id)} size={20} weight="fill" />
         </td>
       </tr>
 
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+        <Dialog as="div" className="w-[100vw] relative z-10 " onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -51,11 +53,11 @@ export const List = ({ opName, ferramenta, cota, tolMax, tolMin, toleranciaMax, 
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className=" w-[100vw] fixed inset-0 bg-black bg-opacity-25" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <div className="flex min-h-full w-[100vw] items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -75,6 +77,7 @@ export const List = ({ opName, ferramenta, cota, tolMax, tolMin, toleranciaMax, 
                     tolMin={tolMin}
                     toleranciaMax={toleranciaMax}
                     toleranciaMin={toleranciaMin}
+                    description={description}
                   />
 
                   <div className="mt-4">
