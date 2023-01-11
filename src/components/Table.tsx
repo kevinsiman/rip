@@ -36,7 +36,7 @@ export const Table = ({ item, op }: TableProps) => {
   return (
     <>
       <div ref={componentRef} className=" flex items-center flex-col justify-center">
-        <div className="flex flex-col p-4 ">
+        <div className="flex flex-col px-4 ">
           <Header />
           <div className="flex flex-col">
             <SubHeader />
@@ -52,6 +52,15 @@ export const Table = ({ item, op }: TableProps) => {
                 ) : null}
 
                 {index === 4 ? (
+                  <>
+                    <div className="mb-32 py-5"></div>
+                    <Header />
+                    <div className="mb-2"></div>
+                    <SubHeader />
+                  </>
+                ) : null}
+
+                {index === 6 ? (
                   <>
                     <div className="mb-32 py-5"></div>
                     <Header />
