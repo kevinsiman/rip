@@ -1,34 +1,28 @@
-import React, { useRef, useCallback } from "react";
-import { rip } from "./Gerador";
+import React, { useRef, useCallback, useState } from "react";
 
 import { useReactToPrint } from "react-to-print";
 
 import { Printer } from "phosphor-react";
+import { rip } from "./Gerador";
+import { Header } from "./TableComponents/Header";
+import { SubHeader } from "./TableComponents/SubHeader";
+import { Cotas } from "./TableComponents/Cotas";
+import { Checks } from "./TableComponents/Checks";
+import { Deskbar } from "./TableComponents/Deskbar";
 
 interface TableProps {
-  opName: string;
-  description: string;
-  ferramenta: string;
-  cota: number;
-  tolMax: number;
-  tolMin: number;
-  toleranciaMax: any;
-  toleranciaMin: any;
+  item: rip;
+  op: any;
 }
 
-export const Table = ({ opName, ferramenta, cota, tolMax, tolMin, toleranciaMax, toleranciaMin, description }: TableProps) => {
+export const Table = ({ item, op }: TableProps) => {
+  const operation = op.filter((iten: rip) => iten.opName === item.opName);
+
+  const [numberPages, setNumberPages] = useState<number>(0);
+  console.log(numberPages);
+
+  const { opName, ferramenta, cota, tolMax, tolMin, toleranciaMax, toleranciaMin, description } = item;
   const componentRef = useRef(null);
-
-  let x: any[] = [];
-
-  const tableGenerator = () => {
-    // Linhas
-    for (let i = 1; i <= 13; i++) {
-      x.push(i);
-    }
-  };
-
-  tableGenerator();
 
   const reactToPrintContent = useCallback(() => {
     return componentRef.current;
@@ -41,56 +35,41 @@ export const Table = ({ opName, ferramenta, cota, tolMax, tolMin, toleranciaMax,
 
   return (
     <>
-      <div ref={componentRef} className="flex items-center justify-center h-full">
-        <div className="flex items-center justify-center">
-          <div className="flex items-center justify-center">
-            <table>
-              <tbody>
-                {toleranciaMax.map((item: any) => (
-                  <tr key={item}>
-                    <td className="w-14 border border-zinc-900 text-center border-r-0">{Number(item).toFixed(3)}</td>
-                  </tr>
-                ))}
-                <tr>
-                  <td className="w-14 border border-zinc-900 text-center bg-zinc-300 border-r-0">{Number(cota).toFixed(3)}</td>
-                </tr>
-                {toleranciaMin.map((item: any) => (
-                  <tr key={item}>
-                    <td className="w-14 border border-zinc-900 text-center border-r-0">{Number(item).toFixed(3)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {/* Check Box */}
-            <table className="flex-1">
-              <tbody>
-                {toleranciaMax.map((item: any) => (
-                  <tr>
-                    {x.map((item, index) => (
-                      <td className="w-14 border border-zinc-900 text-center">
-                        <input name={index.toString()} type="radio" />
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-                <tr>
-                  {x.map((item, index) => (
-                    <td className="w-14 bg-zinc-300 border border-zinc-900 text-center">
-                      <input name={index.toString()} type="radio" />
-                    </td>
-                  ))}
-                </tr>
-                {toleranciaMin.map((item: any) => (
-                  <tr>
-                    {x.map((item, index) => (
-                      <td className="w-14 border border-zinc-900 text-center">
-                        <input name={index.toString()} type="radio" />
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      <div ref={componentRef} className=" flex items-center flex-col justify-center">
+        <div className="flex flex-col p-4 ">
+          <Header />
+          <div className="flex flex-col">
+            <SubHeader />
+            {operation.map((item: rip, index: number) => (
+              <>
+                {index === 2 ? (
+                  <>
+                    <div className="mb-28"></div>
+                    <Header />
+                    <div className="mb-5"></div>
+                    <SubHeader />
+                  </>
+                ) : null}
+
+                {index === 4 ? (
+                  <>
+                    <div className="mb-28"></div>
+                    <Header />
+                    <div className="mb-5"></div>
+                    <SubHeader />
+                  </>
+                ) : null}
+
+                <Deskbar ferramenta={item.ferramenta} description={item.description} opName={item.opName} />
+
+                <div className="flex flex-col items-center justify-center mb-5">
+                  <div className="flex items-center justify-center">
+                    <Cotas toleranciaMax={item.toleranciaMax} toleranciaMin={item.toleranciaMin} cota={item.cota} />
+                    <Checks toleranciaMax={item.toleranciaMax} toleranciaMin={item.toleranciaMin} />
+                  </div>
+                </div>
+              </>
+            ))}
           </div>
         </div>
       </div>

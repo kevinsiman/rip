@@ -21,9 +21,8 @@ export type rip = {
 export const Gerador = () => {
   const [page, setPage] = useState(0);
 
-  const moment = Moment();
-
   const [nomeOp, setNomeOp] = useState<any>("");
+  const [processo, setProcesso] = useState<any>("");
   const [description, setDescription] = useState<any>("");
   const [ferramenta, setFerramenta] = useState<any>("");
 
@@ -34,10 +33,8 @@ export const Gerador = () => {
   const [multTolMax, setMultTolMax] = useState<number>(5);
   const [multTolMin, setMultTolMin] = useState<number>(5);
 
-  const multiplicadorMax = tolMax / (multTolMax + 1);
-  const multiplicadorMin = tolMin / (multTolMin + 1);
-
-  const date = new Date();
+  const multiplicadorMax = tolMax / multTolMax;
+  const multiplicadorMin = tolMin / multTolMin;
 
   const [op, setOp] = useState<[{}] | any | []>([]);
 
@@ -105,6 +102,17 @@ export const Gerador = () => {
     { key: uuidv4(), value: "Fresamento", label: "Fresamento" },
     { key: uuidv4(), value: "Acabamento", label: "Acabamento" },
   ];
+  const operacaoOptions = [
+    { key: uuidv4(), value: "10", label: "OP 10" },
+    { key: uuidv4(), value: "20", label: "OP 20" },
+    { key: uuidv4(), value: "30", label: "OP 30" },
+    { key: uuidv4(), value: "40", label: "OP 40" },
+    { key: uuidv4(), value: "50", label: "OP 50" },
+    { key: uuidv4(), value: "60", label: "OP 60" },
+    { key: uuidv4(), value: "70", label: "OP 70" },
+    { key: uuidv4(), value: "80", label: "OP 80" },
+    { key: uuidv4(), value: "90", label: "OP 90" },
+  ];
 
   const handleGenerator = () => {
     let max = cota + tolMax;
@@ -116,16 +124,12 @@ export const Gerador = () => {
 
     if (tolMax !== 0) {
       for (c = cota + multiplicadorMax; Number(c.toFixed(3)) <= max; c += multiplicadorMax) {
-        //console.log("MAX", Number(c.toFixed(2)));
         tMax.push(Number(c.toFixed(3)));
       }
     }
 
-    // console.log("COTA", Number(cota.toFixed(2)));
-
     if (tolMin !== 0) {
       for (let c = cota - multiplicadorMin; Number(c.toFixed(3)) >= min; c -= multiplicadorMin) {
-        //console.log("MIN", Number(c.toFixed(2)));
         tMin.push(Number(c.toFixed(3)));
       }
     }
@@ -133,8 +137,6 @@ export const Gerador = () => {
     tMax.sort((a, b) => b - a);
     createOp(nomeOp, description, ferramenta, cota, max, min, tMax, tMin);
   };
-
-  console.log(op);
 
   console.log(op.sort((p1: rip, p2: rip) => (p2.data > p1.data ? 1 : p2.data < p1.data ? -1 : 0)));
 
@@ -214,7 +216,13 @@ export const Gerador = () => {
                 <label htmlFor="operation" className="block mb-2 text-sm font-medium text-gray-900">
                   Operação
                 </label>
-                <Select id="operation" defaultValue={nomeOp} onChange={setNomeOp} options={processoOptions} isClearable isSearchable />
+                <Select id="operation" defaultValue={nomeOp} onChange={setNomeOp} options={operacaoOptions} isClearable isSearchable />
+              </div>
+              <div className="mb-6">
+                <label htmlFor="process" className="block mb-2 text-sm font-medium text-gray-900">
+                  Processo
+                </label>
+                <Select id="process" defaultValue={processo} onChange={setProcesso} options={processoOptions} isClearable isSearchable />
               </div>
               <div>
                 <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900">
@@ -230,7 +238,7 @@ export const Gerador = () => {
               </div>
               <div className="mb-6">
                 <label htmlFor="ferramenta" className="block mb-2 text-sm font-medium text-gray-900">
-                  Ferramenta
+                  Instrumento
                 </label>
                 <Select id="ferramenta" defaultValue={ferramenta} onChange={setFerramenta} options={ferramentaOptions} isClearable isSearchable />
               </div>
@@ -278,7 +286,7 @@ export const Gerador = () => {
                     op.map((item: rip, index: number) => (
                       <>
                         {console.log(item.id)}
-                        <List key={item.id} item={item} handleDelete={handleDelete} />
+                        <List op={op} key={item.id} item={item} handleDelete={handleDelete} />
                       </>
                     ))
                   ) : (
