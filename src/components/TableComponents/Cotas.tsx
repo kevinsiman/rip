@@ -12,7 +12,7 @@ export const Cotas = ({ toleranciaMax, toleranciaMin, cota }: CotasProps) => {
       <tbody>
         {toleranciaMax.map((item: any, index: number) => (
           <tr key={item}>
-            <td style={{ width: "87.5px" }} className={`w-20 border border-zinc-900 text-center border-r-0 font-semibold`}>
+            <td style={{ width: "127.3px" }} className={`w-20 border border-zinc-900 text-center border-r-0 font-semibold`}>
               {Number(item).toFixed(2)}
             </td>
           </tr>

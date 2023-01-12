@@ -15,6 +15,7 @@ export type rip = {
   tolMin: number;
   toleranciaMax: any;
   toleranciaMin: any;
+  lineNumber: number;
   data: string;
 };
 
@@ -60,6 +61,7 @@ export const Gerador = () => {
         tolMin,
         toleranciaMax,
         toleranciaMin,
+        lineNumber: toleranciaMax.length + toleranciaMin.length,
         data: Moment().format(),
       },
     ]);
@@ -152,10 +154,11 @@ export const Gerador = () => {
                   Cota
                 </label>
                 <input
+                  min={0}
                   onChange={(e) => setCota(Number(e.target.value))}
                   type="number"
                   id="first_name"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
+                  className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
                   placeholder=""
                   required
                 />
@@ -165,10 +168,11 @@ export const Gerador = () => {
                   Tol +
                 </label>
                 <input
+                  min={0}
                   onChange={(e) => setTolMax(Number(e.target.value))}
                   type="number"
                   id="last_name"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+                  className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                   placeholder=""
                   required
                 />
@@ -178,36 +182,39 @@ export const Gerador = () => {
                   Tol -
                 </label>
                 <input
+                  min={0}
                   onChange={(e) => setTolMin(Number(e.target.value))}
                   type="number"
                   id="company"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+                  className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                   required
                 />
               </div>
               <div>
                 <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900">
-                  M Max
+                  Multiplicador Max
                 </label>
                 <input
+                  min={0}
                   defaultValue={5}
                   onChange={(e) => setMultTolMax(Number(e.target.value))}
                   type="number"
                   id="phone"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+                  className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                   required
                 />
               </div>
               <div>
                 <label htmlFor="website" className="block mb-2 text-sm font-medium text-gray-900">
-                  M Min
+                  Multiplicador Min
                 </label>
                 <input
+                  min={0}
                   defaultValue={5}
                   onChange={(e) => setMultTolMin(Number(e.target.value))}
                   type="url"
                   id="website"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
+                  className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
                   required
                 />
               </div>
@@ -232,7 +239,7 @@ export const Gerador = () => {
                   onChange={(e) => setDescription(e.target.value)}
                   type="text"
                   id="description"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+                  className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                   required
                 />
               </div>
@@ -246,7 +253,7 @@ export const Gerador = () => {
                 <button
                   onClick={handleGenerator}
                   type="button"
-                  className="h-auto py-2 px-5 text-white bg-teal-500 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto  text-center "
+                  className="h-auto py-2 px-5 text-white bg-teal-500 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  sm:w-auto text-center"
                 >
                   Adicionar
                 </button>

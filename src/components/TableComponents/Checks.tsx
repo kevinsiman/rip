@@ -10,7 +10,7 @@ export const Checks = ({ toleranciaMax, toleranciaMin }: ChecksProps) => {
 
   const tableGenerator = () => {
     // Linhas
-    for (let i = 1; i <= 13; i++) {
+    for (let i = 1; i <= 12; i++) {
       x.push(i);
     }
   };
@@ -29,13 +29,13 @@ export const Checks = ({ toleranciaMax, toleranciaMin }: ChecksProps) => {
         ))}
         <tr>
           {x.map((item: any, index: number) => (
-            <td className={`c${index} w-14 bg-zinc-300 border border-zinc-900 text-center`}>o</td>
+            <td className={`c${index} bg-zinc-300 border border-zinc-900 text-center`}>o</td>
           ))}
         </tr>
         {toleranciaMin.map((item: any) => (
           <tr>
             {x.map((item: any, index: number) => (
-              <td className={`c${index} w-14 border border-zinc-900 text-center`}>o</td>
+              <td className={`c${index} border border-zinc-900 text-center`}>o</td>
             ))}
           </tr>
         ))}

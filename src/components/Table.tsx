@@ -18,11 +18,10 @@ interface TableProps {
 export const Table = ({ item, op }: TableProps) => {
   const operation = op.filter((iten: rip) => iten.opName === item.opName);
 
-  const [numberPages, setNumberPages] = useState<number>(0);
-  console.log(numberPages);
-
   const { opName, ferramenta, cota, tolMax, tolMin, toleranciaMax, toleranciaMin, description } = item;
   const componentRef = useRef(null);
+
+  const [count, setCount] = useState<number>(0);
 
   const reactToPrintContent = useCallback(() => {
     return componentRef.current;
@@ -33,6 +32,8 @@ export const Table = ({ item, op }: TableProps) => {
     documentTitle: "AwesomeFileName",
   });
 
+  console.log(count);
+  let c: number = 0;
   return (
     <>
       <div ref={componentRef} className=" flex items-center flex-col justify-center">
@@ -69,14 +70,14 @@ export const Table = ({ item, op }: TableProps) => {
                   </>
                 ) : null}
 
-                <Deskbar ferramenta={item.ferramenta} description={item.description} opName={item.opName} />
-
-                <div className="flex flex-col items-center justify-center mb-5">
+                <div className="flex flex-col items-center justify-center">
                   <div className="flex items-center justify-center">
                     <Cotas toleranciaMax={item.toleranciaMax} toleranciaMin={item.toleranciaMin} cota={item.cota} />
                     <Checks toleranciaMax={item.toleranciaMax} toleranciaMin={item.toleranciaMin} />
                   </div>
                 </div>
+                <Deskbar ferramenta={item.ferramenta} description={item.description} opName={item.opName} />
+                <div className="mt-10"></div>
               </>
             ))}
           </div>
