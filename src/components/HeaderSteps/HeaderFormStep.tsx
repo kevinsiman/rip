@@ -16,6 +16,7 @@ export const HeaderFormStep = ({ setHeaderInfo, headerInfo }: HeaderFormStep) =>
               Elaborador
             </label>
             <input
+              defaultValue="ENZO LEITE"
               onChange={(e) => setHeaderInfo({ ...headerInfo, elaborador: e.target.value })}
               type="text"
               id="first_name"
@@ -31,6 +32,7 @@ export const HeaderFormStep = ({ setHeaderInfo, headerInfo }: HeaderFormStep) =>
             </label>
             <input
               onChange={(e) => setHeaderInfo({ ...headerInfo, liberado: e.target.value })}
+              defaultValue="HANS ERICH ANGELO"
               type="text"
               id="last_name"
               className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
