@@ -3,15 +3,16 @@ import React, { useState, Fragment } from "react";
 
 import { Popover, Dialog } from "@headlessui/react";
 import { Table } from "./Table";
-import { rip } from "./Gerador";
+import { HeaderType, rip } from "./Gerador";
 
 interface ListProps {
   item: rip;
+  headerInfo: HeaderType;
   handleDelete: (type: string) => void;
   op: any;
 }
 
-export const List = ({ item, handleDelete, op }: ListProps) => {
+export const List = ({ item, handleDelete, op, headerInfo }: ListProps) => {
   const { id, description, opName, ferramenta, cota, tolMax, tolMin, toleranciaMax, toleranciaMin } = item;
   let [isOpen, setIsOpen] = useState(false);
 
@@ -48,7 +49,7 @@ export const List = ({ item, handleDelete, op }: ListProps) => {
       <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50 bg-gray-400">
         <div className="fixed inset-0 flex items-center justify-center p-4 overflow-scroll bg-zinc-100 ">
           <Dialog.Panel className="w-auto h-full rounded bg-zinc-100">
-            <Table op={op} item={item} />
+            <Table headerInfo={headerInfo} op={op} item={item} />
           </Dialog.Panel>
         </div>
       </Dialog>

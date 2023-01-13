@@ -3,7 +3,7 @@ import React, { useRef, useCallback, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 
 import { Printer } from "phosphor-react";
-import { rip } from "./Gerador";
+import { HeaderType, rip } from "./Gerador";
 import { Header } from "./TableComponents/Header";
 import { SubHeader } from "./TableComponents/SubHeader";
 import { Cotas } from "./TableComponents/Cotas";
@@ -11,11 +11,12 @@ import { Checks } from "./TableComponents/Checks";
 import { Deskbar } from "./TableComponents/Deskbar";
 
 interface TableProps {
+  headerInfo: HeaderType;
   item: rip;
   op: any;
 }
 
-export const Table = ({ item, op }: TableProps) => {
+export const Table = ({ item, op, headerInfo }: TableProps) => {
   const operation = op.filter((iten: rip) => iten.opName === item.opName);
 
   const { opName, ferramenta, cota, tolMax, tolMin, toleranciaMax, toleranciaMin, description } = item;
@@ -38,7 +39,7 @@ export const Table = ({ item, op }: TableProps) => {
     <>
       <div ref={componentRef} className=" flex items-center flex-col justify-center">
         <div className="flex flex-col px-4 ">
-          <Header />
+          <Header headerInfo={headerInfo} />
           <div className="flex flex-col">
             <SubHeader />
             {operation.map((item: rip, index: number) => (
@@ -46,7 +47,7 @@ export const Table = ({ item, op }: TableProps) => {
                 {index === 2 ? (
                   <>
                     <div className="mb-28"></div>
-                    <Header />
+                    <Header headerInfo={headerInfo} />
                     <div className="mb-5"></div>
                     <SubHeader />
                   </>
@@ -55,7 +56,7 @@ export const Table = ({ item, op }: TableProps) => {
                 {index === 4 ? (
                   <>
                     <div className="mb-32 py-5"></div>
-                    <Header />
+                    <Header headerInfo={headerInfo} />
                     <div className="mb-2"></div>
                     <SubHeader />
                   </>
@@ -64,7 +65,7 @@ export const Table = ({ item, op }: TableProps) => {
                 {index === 6 ? (
                   <>
                     <div className="mb-32 py-5"></div>
-                    <Header />
+                    <Header headerInfo={headerInfo} />
                     <div className="mb-2"></div>
                     <SubHeader />
                   </>
